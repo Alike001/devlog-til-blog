@@ -1,9 +1,10 @@
 import { AppProvider } from './context/AppContext'
-import './App.css'
+import Navbar from './components/Navbar'
 
 function App() {
   return (
     <AppProvider>
+      <Navbar />
     </AppProvider>
   )
 }
