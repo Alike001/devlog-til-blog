@@ -20,7 +20,7 @@
 }
 
 * {
-  box-sizing: border-box; /* padding and border included in width */
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
@@ -158,6 +158,8 @@ a {
   margin-bottom: 16px;
   box-shadow: var(--shadow);
   transition: box-shadow 0.2s ease;
+  overflow: hidden;
+  word-break: break-word;
 }
 
 .post-card:hover {
@@ -223,6 +225,8 @@ a {
   color: var(--color-muted);
   margin-bottom: 12px;
   line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .read-more-link {
@@ -466,6 +470,8 @@ a {
   line-height: 1.75;
   color: var(--color-text);
   margin-top: 16px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .back-link {
