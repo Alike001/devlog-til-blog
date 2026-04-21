@@ -624,6 +624,7 @@ a {
   .nav-links button:last-child {
     border-bottom: none;
     margin-top: 4px;
+    padding-left: 2px;
   }
 
   .nav-register-btn {
