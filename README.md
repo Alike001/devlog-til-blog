@@ -128,7 +128,7 @@ devlog-til/
 ## Demo Link- https://devlog-til-blog.vercel.app/
 
 ## Built By Ali Hammed
-# Web3Bridge Cohort XIV Final Project Week.
+Web3Bridge Cohort XIV Final Project Week.
 
 ## License
 
