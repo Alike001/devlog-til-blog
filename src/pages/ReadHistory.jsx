@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../hooks/useApp'
 
 export default function ReadHistory() {
-  const { history, posts } = useApp()
+  const { getHistory, posts } = useApp()
 
-  const readPosts = history
+  const historyIds = getHistory()
+
+  const readPosts = historyIds
     .map(id => posts.find(p => p.id === id))
     .filter(Boolean)
 

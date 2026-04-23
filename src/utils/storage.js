@@ -3,7 +3,6 @@ export const KEYS = {
   users: 'devlog_users',
   currentUser: 'devlog_currentUser',
   posts: 'devlog_posts',
-  history: 'devlog_history',
 }
 
 // example of posts that appear when the app loads for the first time.

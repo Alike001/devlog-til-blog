@@ -22,16 +22,8 @@ export function AppProvider({ children }) {
     return saved
   })
 
-  // Read history: array of post IDs the current user has opened
-  const [history, setHistory] = useState(() =>
-    load(KEYS.history, [])
-  )
-
   // Keep localStorage in sync whenever posts change
   useEffect(() => { save(KEYS.posts, posts) }, [posts])
-
-  // Keep localStorage in sync whenever history changes
-  useEffect(() => { save(KEYS.history, history) }, [history])
 
   function register(username, password) {
     const users = load(KEYS.users, [])
@@ -45,13 +37,9 @@ export function AppProvider({ children }) {
       password,
     }
 
-    const updatedUsers = [...users, newUser]
-    save(KEYS.users, updatedUsers)
-
-    // Log the new user in immediately after registering
+    save(KEYS.users, [...users, newUser])
     setCurrentUser(newUser)
     save(KEYS.currentUser, newUser)
-
     return { success: true }
   }
 
@@ -65,18 +53,11 @@ export function AppProvider({ children }) {
 
     setCurrentUser(user)
     save(KEYS.currentUser, user)
-
-    // Load this user's read history from localStorage
-    const userHistory = load(`${KEYS.history}_${user.id}`, [])
-    setHistory(userHistory)
-
-    return { success: true }
   }
 
   function logout() {
     setCurrentUser(null)
     localStorage.removeItem(KEYS.currentUser)
-    setHistory([])
   }
 
   function createPost(title, body, tag) {
@@ -105,18 +86,19 @@ export function AppProvider({ children }) {
   }
 
   //Add a post to read history
-  function addToHistory(postId) {
+   function addToHistory(postId) {
     if (!currentUser) return
+    const key = `devlog_history_${currentUser.id}`
+    const prev = load(key, [])
+    // Remove duplicate then add to front (most recent first)
+    const updated = [postId, ...prev.filter(id => id !== postId)]
+    save(key, updated)
+  }
 
-    setHistory(prev => {
-      // Don't add duplicates
-      const filtered = prev.filter(id => id !== postId)
-      const updated = [postId, ...filtered]
-
-      // Save history under a per-user key so each user has their own history
-      save(`${KEYS.history}_${currentUser.id}`, updated)
-      return updated
-    })
+   function getHistory() {
+    if (!currentUser) return []
+    const key = `devlog_history_${currentUser.id}`
+    return load(key, [])
   }
 
   const value = {
@@ -130,6 +112,7 @@ export function AppProvider({ children }) {
     editPost,
     deletePost,
     addToHistory,
+    getHistory,
   }
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>
